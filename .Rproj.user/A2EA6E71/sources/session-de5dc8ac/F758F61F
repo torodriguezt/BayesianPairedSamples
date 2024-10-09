@@ -1,7 +1,7 @@
 {
     "id": "F758F61F",
-    "path": "~/paired/R/compute_evidence.R",
-    "project_path": "R/compute_evidence.R",
+    "path": "~/paired/R/evidence_alpha.R",
+    "project_path": "R/evidence_alpha.R",
     "type": "r_source",
     "hash": "0",
     "contents": "",
@@ -13,15 +13,15 @@
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "48,64",
-        "scrollLine": "39"
+        "cursorPosition": "80,12",
+        "scrollLine": "29"
     },
     "folds": "",
-    "lastKnownWriteTime": 1728437963,
+    "lastKnownWriteTime": 1728441270,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1728437963072,
+    "last_content_update": 1728441270324,
     "read_only": false,
     "read_only_alternatives": []
 }

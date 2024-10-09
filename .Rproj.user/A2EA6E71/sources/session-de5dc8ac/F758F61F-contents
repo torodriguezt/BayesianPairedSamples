@@ -28,7 +28,7 @@
 #'
 #'
 #'
-evidence <- function(x1, x2, n1, n2, alpha0, alpha1, alpha2, i, j, N2, n_bootstrap, seed = NULL) {
+evidence_alpha <- function(x1, x2, n1, n2, alpha0, alpha1, alpha2, i, j, N2, n_bootstrap, seed = NULL) {
 
   if (is.null(seed)) {
     seed <- sample.int(.Machine$integer.max, 1)
@@ -50,7 +50,7 @@ evidence <- function(x1, x2, n1, n2, alpha0, alpha1, alpha2, i, j, N2, n_bootstr
 
   GA_ev <- ga(type = "real-valued",
               fitness = function(x) {
-                densBB_functor(x1, x2, n1, n2, u, l, alpha0, alpha1, alpha2, i, equal_thetas = TRUE)(x[1])
+                densBB(x1, x2, n1, n2, u, l, alpha0, alpha1, alpha2, i, equal_thetas = TRUE)(x[1])
               },
               lower = c(0), upper = c(0.99),
               popSize = 50, maxiter = 1000, run = 100,
@@ -74,10 +74,10 @@ evidence <- function(x1, x2, n1, n2, alpha0, alpha1, alpha2, i, j, N2, n_bootstr
     extract(stan_vb)$Theta[, 2] |> as.vector()
   )
 
-  densBB <- densBB_functor(x1, x2, n1, n2, u, l, alpha0, alpha1, alpha2, i, equal_thetas = TRUE)
+  densBB <- densBB(x1, x2, n1, n2, u, l, alpha0, alpha1, alpha2, i, equal_thetas = TRUE)
 
   ev10 <- mean(apply(Thetas, 1, function(t) {
-    I(densBB(t[1], t[2]) < densBB(supremo_ga_ev))
+    I(densBB_ev(t[1], t[2]) < densBB_ev(supremo_ga_ev))
   }), na.rm = TRUE)
 
   return(ev10)

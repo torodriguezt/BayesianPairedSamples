@@ -1,11 +1,11 @@
 {
     "id": "F9EE55DC",
-    "path": "~/paired/R/error_alpha.R",
-    "project_path": "R/error_alpha.R",
+    "path": "~/paired/R/error_one.R",
+    "project_path": "R/error_one.R",
     "type": "r_source",
-    "hash": "0",
+    "hash": "2179267329",
     "contents": "",
-    "dirty": true,
+    "dirty": false,
     "created": 1726553282538.0,
     "source_on_save": false,
     "relative_order": 3,
@@ -13,15 +13,15 @@
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "35,35",
-        "scrollLine": "0"
+        "cursorPosition": "30,24",
+        "scrollLine": "18"
     },
     "folds": "",
-    "lastKnownWriteTime": 1727990428,
+    "lastKnownWriteTime": 1728441300,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1728020440469,
+    "last_content_update": 1728441300020,
     "read_only": false,
     "read_only_alternatives": []
 }

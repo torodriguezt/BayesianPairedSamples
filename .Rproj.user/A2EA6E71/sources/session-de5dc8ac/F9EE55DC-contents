@@ -28,7 +28,7 @@
 
 error_one <- function(x1, x2, n1, n2, alpha0, alpha1, alpha2, i, j, N2, n_bootstrap, k, seed = NULL) {
 
-  ev10 <- evidence(x1, x2, n1, n2, alpha0, alpha1, alpha2, i, j, N2, n_bootstrap, seed)
+  ev10 <- evidence_alpha(x1, x2, n1, n2, alpha0, alpha1, alpha2, i, j, N2, n_bootstrap, seed)
 
   Ind <- I(ev10 <= k)
 

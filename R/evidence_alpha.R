@@ -1,6 +1,6 @@
 #' Calculate Evidence for the Beta-Binomial Model
 #'
-#' This function calculates the evidence for a beta-binomial model using variational inference under type II error
+#' This function calculates the evidence for a beta-binomial model using variational inference under error type I
 #' via Stan and genetic algorithms to optimize parameters. It returns the calculated evidence (`ev10`).
 #'
 #' @param x1 Numeric vector. Observations for the first sample.
@@ -21,23 +21,27 @@
 #' @examples
 #' evidence(x1 = c(1, 0), x2 = c(1, 1), n1 = 2, n2 = 2, alpha0 = 0.6, alpha1 = 0.65, alpha2 = 0.7, i = 1, j = 1, N2 = 100, n_bootstrap = 1000)
 #'
+#' @importFrom hypergeo genhypergeo
+#' @importFrom rstan extract
+#'
 #' @export
-evidence_beta <- function(x1, x2, n1, n2, alpha0, alpha1, alpha2, i, j, N2, n_bootstrap, theta1, theta2, seed = NULL) {
+#'
+#'
+#'
+evidence_alpha <- function(x1, x2, n1, n2, alpha0, alpha1, alpha2, i, j, N2, n_bootstrap, seed = NULL) {
 
   if (is.null(seed)) {
     seed <- sample.int(.Machine$integer.max, 1)
   }
 
-  seed <- 456
-
-  f2 <- function(X1,X2,theta1,theta2) {
-    exp(dbinom(X1,n1,theta1[j],log=T)+dbinom(X2,n2,theta2[j],log=T))
-    }
+  f2 <- function(X1, X2, theta1) {
+    exp(dbinom(X1, n1, theta1, log = TRUE) + dbinom(X2, n2, theta1, log = TRUE))
+  }
 
   alpha <- sum(c(alpha0, alpha1, alpha2))
   Theta1 <- rbeta(N2, 1, 1)
 
-  f_ver <- f2(x1[i], x2[i], theta1[j], theta2[j])
+  f_ver <- f2(x1[i], x2[i], Theta1[j])
 
   u <- c(alpha, x1[i] + alpha1, x2[i] + alpha2)
   l <- c(n1 + alpha, n2 + alpha)
@@ -46,12 +50,11 @@ evidence_beta <- function(x1, x2, n1, n2, alpha0, alpha1, alpha2, i, j, N2, n_bo
 
   GA_ev <- ga(type = "real-valued",
               fitness = function(x) {
-                densBB_functor(x1, x2, n1, n2, u, l, alpha0, alpha1, alpha2, i, TRUE)(x[1])
+                densBB(x1, x2, n1, n2, u, l, alpha0, alpha1, alpha2, i, equal_thetas = TRUE)(x[1])
               },
               lower = c(0), upper = c(0.99),
               popSize = 50, maxiter = 1000, run = 100,
               monitor = FALSE)
-
 
   supremo_ga_ev <- GA_ev@solution[1, ] |> as.numeric()
 
@@ -71,10 +74,10 @@ evidence_beta <- function(x1, x2, n1, n2, alpha0, alpha1, alpha2, i, j, N2, n_bo
     extract(stan_vb)$Theta[, 2] |> as.vector()
   )
 
-  densBB <- densBB_functor(x1, x2, n1, n2, u, l, alpha0, alpha1, alpha2, i, equal_thetas = FALSE)
+  densBB <- densBB(x1, x2, n1, n2, u, l, alpha0, alpha1, alpha2, i, equal_thetas = TRUE)
 
-  ev10 <- mean(apply(Thetas, 1,
-                      function(t) { I(densBB(t[1], t[2]) < densBB_functor(x1, x2, n1, n2, u, l, alpha0, alpha1, alpha2, i, equal_thetas = TRUE)(supremo_ga_ev))
+  ev10 <- mean(apply(Thetas, 1, function(t) {
+    I(densBB_ev(t[1], t[2]) < densBB_ev(supremo_ga_ev))
   }), na.rm = TRUE)
 
   return(ev10)

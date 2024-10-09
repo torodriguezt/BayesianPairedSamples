@@ -24,7 +24,7 @@
 #'
 #' @importFrom hypergeo genhypergeo
 #' @export
-alf_integ2 <- function(k, x1, x2, n1, n2, alpha0, alpha1, alpha2, j, N1, N2, n_bootstrap, seed = NULL) {
+mc_integral_alpha <- function(k, x1, x2, n1, n2, alpha0, alpha1, alpha2, j, N1, N2, n_bootstrap, seed = NULL) {
 
   i_seq <- seq(1, N1)
 

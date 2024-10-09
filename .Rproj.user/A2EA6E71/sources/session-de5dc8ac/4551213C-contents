@@ -30,13 +30,13 @@ full_evidence_alpha <- function(x1, x2, n1, n2, alpha0, alpha1, alpha2, N1, N2, 
   library(future)
 
   m_grids_k <- list(
-    #round(seq(0.0000, 0.0909, length.out = 10), 4),
-    #round(seq(0.1010, 0.1919, length.out = 10), 4),
-    #round(seq(0.2020, 0.2929, length.out = 10), 4),
-    #round(seq(0.3030, 0.3939, length.out = 10), 4),
-    #round(seq(0.4040, 0.4949, length.out = 10), 4),
-    #round(seq(0.5051, 0.5960, length.out = 10), 4),
-    #round(seq(0.6061, 0.6970, length.out = 10), 4),
+    round(seq(0.0000, 0.0909, length.out = 10), 4),
+    round(seq(0.1010, 0.1919, length.out = 10), 4),
+    round(seq(0.2020, 0.2929, length.out = 10), 4),
+    round(seq(0.3030, 0.3939, length.out = 10), 4),
+    round(seq(0.4040, 0.4949, length.out = 10), 4),
+    round(seq(0.5051, 0.5960, length.out = 10), 4),
+    round(seq(0.6061, 0.6970, length.out = 10), 4),
     round(seq(0.7071, 0.7980, length.out = 10), 4),
     round(seq(0.8081, 0.8990, length.out = 10), 4),
     round(seq(0.9091, 1.0000, length.out = 10), 4)
@@ -52,7 +52,7 @@ full_evidence_alpha <- function(x1, x2, n1, n2, alpha0, alpha1, alpha2, N1, N2, 
   calculate_for_grid <- function(m_grid_k) {
     future_map_dbl(
       m_grid_k,
-      ~mean(sapply(j, function(i) alf_integ2(k = .x, x1 = x1, x2 = x2, n1 = n1, n2 = n2,
+      ~mean(sapply(j, function(i) mc_integral_alpha(k = .x, x1 = x1, x2 = x2, n1 = n1, n2 = n2,
                                              alpha0 = alpha0, alpha1 = alpha1, alpha2 = alpha2, j = i,
                                              N1 = N1, N2 = N2, n_bootstrap = n_bootstrap, seed = seed)),
             na.rm = TRUE),

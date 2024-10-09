@@ -42,7 +42,7 @@ evidence_beta <- function(x1, x2, n1, n2, alpha0, alpha1, alpha2, i, j, N2, n_bo
   u <- c(alpha, x1[i] + alpha1, x2[i] + alpha2)
   l <- c(n1 + alpha, n2 + alpha)
 
-  stan_model <- rstan::stan_model(file = 'inst/stan/BBpost3.stan', verbose = TRUE)
+  stan_model <- rstan::stan_model(file = 'BBpost3.stan', verbose = TRUE)
 
   GA_ev <- ga(type = "real-valued",
               fitness = function(x) {
@@ -71,10 +71,10 @@ evidence_beta <- function(x1, x2, n1, n2, alpha0, alpha1, alpha2, i, j, N2, n_bo
     extract(stan_vb)$Theta[, 2] |> as.vector()
   )
 
-  densBB <- densBB_functor(x1, x2, n1, n2, u, l, alpha0, alpha1, alpha2, i, equal_thetas = FALSE)
+  densBB_ev <- densBB(x1, x2, n1, n2, u, l, alpha0, alpha1, alpha2, i, equal_thetas = FALSE)
 
   ev10 <- mean(apply(Thetas, 1,
-                      function(t) { I(densBB(t[1], t[2]) < densBB_functor(x1, x2, n1, n2, u, l, alpha0, alpha1, alpha2, i, equal_thetas = TRUE)(supremo_ga_ev))
+                      function(t) { I(densBB_ev(t[1], t[2]) < densBB(x1, x2, n1, n2, u, l, alpha0, alpha1, alpha2, i, equal_thetas = TRUE)(supremo_ga_ev))
   }), na.rm = TRUE)
 
   return(ev10)

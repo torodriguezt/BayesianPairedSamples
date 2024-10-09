@@ -27,7 +27,7 @@
 #' @export
 
 
-densBB_functor <- function(x1, x2, n1, n2, u, l, a0, a1, a2, i = 1, equal_thetas = FALSE, use_log = FALSE) {
+densBB <- function(x1, x2, n1, n2, u, l, a0, a1, a2, i = 1, equal_thetas = FALSE, use_log = FALSE) {
 
   a <- sum(c(a0,a1,a2))
 
