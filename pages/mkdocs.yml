@@ -1,14 +1,14 @@
 site_name: "Bayesian Paired Samples"
+site_url: "https://torodriguezt.github.io/BayesianPairedSamples/"
 theme:
   name: "material"
 
 nav:
   - Home: index.md
   - Functions:
-      - densBB: docs/densBB.md
-      - Error One: docs/error_one.md
-      - Error Two: docs/error_two.md
-      - Evidence Beta: docs/evidence_beta.md
-      - Full Evidence Beta: docs/full_evidence_beta.md
-      - MC Integral Alpha: docs/mc_integral_alpha.md
-      - Select K: docs/select_k.md
+      - densBB Function: docs/densBB.md
+      - Error One Function: docs/error_one.md
+      - Error Two Function: docs/error_two.md
+      - Evidence Beta Function: docs/evidence_beta.md
+
+use_directory_urls: false
