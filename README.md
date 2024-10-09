@@ -9,8 +9,6 @@
 You can install the latest version of the package directly from GitHub using `remotes` or `devtools`:
 
 ```r
-# Install the remotes package if you don't have it already
 install.packages("remotes")
 
-# Install the package from GitHub
 remotes::install_github("torodriguezt/BayesianPairedSamples")
